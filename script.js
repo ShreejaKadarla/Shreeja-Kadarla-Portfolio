@@ -25,89 +25,41 @@ filterButtons.forEach((button) => {
   });
 });
 
+// Client-side contact form validation. This demo does not submit data to a server.
+const contactForm = document.querySelector("#contactForm");
+const formMessage = document.querySelector("#formMessage");
+const fields = [...contactForm.querySelectorAll("input, textarea")];
 
-// Contact Form Validation
-const contactForm = document.getElementById("contactForm");
-const nameInput = document.getElementById("name");
-const emailInput = document.getElementById("email");
-const messageInput = document.getElementById("message");
-const formStatus = document.getElementById("formMessage");
+const isValidField = (field) => {
+  if (field.id === "name") return field.value.trim().length >= 2;
+  if (field.id === "email") return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value.trim());
+  if (field.id === "message") return field.value.trim().length >= 10;
+  return field.checkValidity();
+};
 
-if (contactForm) {
-    contactForm.addEventListener("submit", function (event) {
-        event.preventDefault();
+fields.forEach((field) => {
+  field.addEventListener("input", () => {
+    field.classList.toggle("is-invalid", !isValidField(field));
+    field.classList.toggle("is-valid", isValidField(field) && field.value.trim() !== "");
+  });
+});
 
-        // Clear previous messages
-        formStatus.textContent = "";
-        formStatus.className = "";
+contactForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  let allValid = true;
+  fields.forEach((field) => {
+    const valid = isValidField(field);
+    field.classList.toggle("is-invalid", !valid);
+    field.classList.toggle("is-valid", valid);
+    if (!valid) allValid = false;
+  });
+  if (allValid) {
+    formMessage.textContent = "Your details are valid. This demo does not send the message.";
+    formMessage.className = "mt-3 text-success fw-semibold";
+  } else {
+    formMessage.textContent = "Please correct the highlighted fields and try again.";
+    formMessage.className = "mt-3 text-danger fw-semibold";
+  }
+});
 
-        // Reset validation styles
-        [nameInput, emailInput, messageInput].forEach(input => {
-            input.classList.remove("is-valid", "is-invalid");
-            const feedback = input.parentElement.querySelector(".invalid-feedback");
-            if (feedback) feedback.textContent = "";
-        });
-
-        let isValid = true;
-
-        // Validate name
-        if (!nameInput.value.trim()) {
-            showError(nameInput, "Please enter your name.");
-            isValid = false;
-        } else {
-            nameInput.classList.add("is-valid");
-        }
-
-        // Validate email
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!emailInput.value.trim()) {
-            showError(emailInput, "Please enter your email address.");
-            isValid = false;
-        } else if (!emailPattern.test(emailInput.value.trim())) {
-            showError(emailInput, "Please enter a valid email address.");
-            isValid = false;
-        } else {
-            emailInput.classList.add("is-valid");
-        }
-
-        // Validate message
-        if (messageInput.value.trim().length < 10) {
-            showError(messageInput, "Please enter a message of at least 10 characters.");
-            isValid = false;
-        } else {
-            messageInput.classList.add("is-valid");
-        }
-
-        // Display final result
-        if (isValid) {
-            formStatus.textContent =
-                "Your details are valid! This demo does not send the message.";
-            formStatus.className = "text-success mt-3";
-        } else {
-            formStatus.textContent =
-                "Please correct the errors above and try again.";
-            formStatus.className = "text-danger mt-3";
-        }
-    });
-
-    function showError(input, message) {
-        input.classList.add("is-invalid");
-        const feedback = input.parentElement.querySelector(".invalid-feedback");
-        if (feedback) {
-            feedback.textContent = message;
-        }
-    }
-
-    // Clear old status when the user edits a field
-    [nameInput, emailInput, messageInput].forEach(input => {
-        input.addEventListener("input", function () {
-            formStatus.textContent = "";
-            formStatus.className = "";
-
-            input.classList.remove("is-valid", "is-invalid");
-            const feedback = input.parentElement.querySelector(".invalid-feedback");
-            if (feedback) feedback.textContent = "";
-        });
-    });
-}
+document.querySelector("#year").textContent = new Date().getFullYear();
