@@ -18,3 +18,19 @@ BEFORE SUBMISSION
 - Test the navigation, theme toggle, project filters, form validation, and mobile layout.
 - Take screenshots for the assignment report.
 - The contact form is front-end validation only; it does not send or store messages.
+
+## Technologies Used
+
+* HTML5
+* CSS3
+* Bootstrap
+* JavaScript (ES6+)
+
+## GitHub Repository
+
+[View Source Code](PASTE_YOUR_GITHUB_REPOSITORY_URL_HERE)
+
+## Live Portfolio
+
+PASTE_YOUR_LIVE_PORTFOLIO_URL_HERE
+
