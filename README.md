@@ -28,9 +28,10 @@ BEFORE SUBMISSION
 
 ## GitHub Repository
 
-[View Source Code](PASTE_YOUR_GITHUB_REPOSITORY_URL_HERE)
+https://github.com/ShreejaKadarla/Shreeja-Kadarla-Portfolio
 
 ## Live Portfolio
 
-PASTE_YOUR_LIVE_PORTFOLIO_URL_HERE
+https://shreejakadarla.github.io/Shreeja-Kadarla-Portfolio/
+
 
